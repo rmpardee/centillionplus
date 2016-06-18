@@ -1,5 +1,10 @@
 var server = require('../server.js');
 
+// server.io.on('totalVotesChange', function(data) {
+//   // Re-emit a call for all the clients to hear to update
+//   server.io.emit('totalVotesChange', data);
+// });
+
 //this contains and modifies the vote session obj
 module.exports = {
     

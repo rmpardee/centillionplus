@@ -32,6 +32,12 @@ angular.module('MainCtrl', [])
     $scope.$apply();
   });
 
+  Main.socket.on('totalVotesChange', function(data) {
+    console.log("hearing totalVotesChange client");
+    // Update the voter object to reflect the new data
+    $scope.dcydrObj = data;
+  });
+
 
 //---view1-------------------------------------------------------
 
@@ -40,6 +46,8 @@ angular.module('MainCtrl', [])
     // Set max number of voters to 15 for now.  This may change..
     if ($scope.dcydrObj.totalVotes < 15) {
       $scope.dcydrObj.totalVotes += 1;
+      console.log("emitting totalVotesChange increase");
+      Main.socket.emit('totalVotesChange', $scope.dcydrObj);
     }
   };
 
@@ -48,6 +56,8 @@ angular.module('MainCtrl', [])
     // Min number of voters is 2 (maybe could be 3?)
     if ($scope.dcydrObj.totalVotes > 2) {
       $scope.dcydrObj.totalVotes -= 1;
+      console.log("emitting totalVotesChange increase");
+      Main.socket.emit('totalVotesChange', $scope.dcydrObj);
     }
   };
 

@@ -24,6 +24,7 @@ angular.module('MainCtrl', [])
   
   // Listen to any server-side stateView changes via the socket, and update $scope.dcydrObj accorgingly
   Main.socket.on('stateViewChange', function(data) {
+    console.log("hearing stateViewChange client");
     // Update the voter object to reflect the new data
     $scope.dcydrObj = data;
     // Change the route as appropriate
@@ -45,9 +46,12 @@ angular.module('MainCtrl', [])
   $scope.incNumOfVoters = function() {
     // Set max number of voters to 15 for now.  This may change..
     if ($scope.dcydrObj.totalVotes < 15) {
+      // console.log("emitting totalVotesChange increase");
+      console.log("Main.socket: ", Main.socket);
+      Main.socket.emit('stateViewChange', $scope.dcydrObj, function(data) {
+        console.log("data: ", data);
+      });
       $scope.dcydrObj.totalVotes += 1;
-      console.log("emitting totalVotesChange increase");
-      Main.socket.emit('totalVotesChange', $scope.dcydrObj);
     }
   };
 
@@ -56,8 +60,10 @@ angular.module('MainCtrl', [])
     // Min number of voters is 2 (maybe could be 3?)
     if ($scope.dcydrObj.totalVotes > 2) {
       $scope.dcydrObj.totalVotes -= 1;
-      console.log("emitting totalVotesChange increase");
-      Main.socket.emit('totalVotesChange', $scope.dcydrObj);
+      // console.log("emitting totalVotesChange decrease");
+      Main.socket.emit('totalVotesChange', $scope.dcydrObj, function(data) {
+        console.log("data: ", data);
+      });
     }
   };
 

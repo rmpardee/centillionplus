@@ -47,10 +47,11 @@ angular.module('MainCtrl', [])
     // Set max number of voters to 15 for now.  This may change..
     if ($scope.dcydrObj.totalVotes < 15) {
       // console.log("emitting totalVotesChange increase");
-      console.log("Main.socket: ", Main.socket);
-      Main.socket.emit('stateViewChange', $scope.dcydrObj, function(data) {
-        console.log("data: ", data);
-      });
+      console.log("Main.socket.emit: ", Main.socket.emit);
+      Main.socket.emit('totalVotesChange');
+      //   , function(data) {
+      //   console.log("data: ", data);
+      // });
       $scope.dcydrObj.totalVotes += 1;
     }
   };
@@ -61,6 +62,7 @@ angular.module('MainCtrl', [])
     if ($scope.dcydrObj.totalVotes > 2) {
       $scope.dcydrObj.totalVotes -= 1;
       // console.log("emitting totalVotesChange decrease");
+      console.log("Main.socket: ", Main.socket);
       Main.socket.emit('totalVotesChange', $scope.dcydrObj, function(data) {
         console.log("data: ", data);
       });

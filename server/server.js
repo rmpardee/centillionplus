@@ -19,11 +19,11 @@ console.log('DCYDR listening' + PORT);
 // Create the socket variable by passing in the HTTP server we saved above
 var io = socketio(server);
 
-// io.on('totalVotesChange', function(data) {
-//   // Re-emit a call for all the clients to hear to update
-//   console.log("emitting totalVotesChange server");
-//   server.io.emit('totalVotesChange', data);
-// });
+io.on('totalVotesChange', function(data) {
+  // Re-emit a call for all the clients to hear to update
+  console.log("emitting totalVotesChange server");
+  // server.io.emit('totalVotesChange', data);
+});
 
 
 // Note RMP: I don't think this exported app is actually used anywhere
